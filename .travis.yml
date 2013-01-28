@@ -1,2 +1,3 @@
 language: go
+install: cd && go get -d -v && go build -v
 script: cd src && go test
