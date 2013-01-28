@@ -10,15 +10,15 @@ Fondu is a [CheeseShop](http://wiki.python.org/moin/CheeseShop) server powered b
 * easy install/pip compliant
 * setup.py register|upload compatible
 
-## Install
+## Installation
 
-If you have [Go](http://golang.org/) installed, all you have to do is
+[Install Go](http://golang.org/doc/install).
+
+Install Fondu:
 
 ```shell
 go install github.com/geetarista/fondu
 ```
-
-Otherwise, you can [download the binary](https://raw.github.com/geetarista/fondu/master/fondu).
 
 ## Usage
 
