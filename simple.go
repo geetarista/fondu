@@ -70,8 +70,6 @@ func finalizeCache(w http.ResponseWriter, pkg Package, data []byte) {
 		version := strings.Replace(almostVersion, ".tar.gz", "", -1)
 		quoteduri := url.QueryEscape(Config.PypiMirror + "/a/b/" + string(uri))
 		replaceuri := "/fondu/cached-file/" + string(filename) + "?package=" + pkg.Name + "&release=" + version + "&original=" + quoteduri + "&name=" + url.QueryEscape(string(filename))
-		println("Going to replace: " + string(uri))
-		println("            with: " + replaceuri)
 		returnData = strings.Replace(returnData, string(uri), replaceuri, -1)
 	}
 
