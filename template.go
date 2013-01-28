@@ -56,10 +56,17 @@ func loadTemplate(layout, tmpl string) (t *template.Template, err error) {
 }
 
 func renderTemplate(w http.ResponseWriter, tmpl string, tmplData interface{}) {
+	dir := ""
 	pkg, _ := build.Import("github.com/geetarista/fondu", "", build.FindOnly)
 
-	l := pkg.Dir + "/views/simple/base.html"
-	v := pkg.Dir + "/views/" + tmpl + ".html"
+	if pkg != "" {
+		dir = pkg.Dir
+	} else {
+		dir = "."
+	}
+
+	l := dir + "/views/simple/base.html"
+	v := dir + "/views/" + tmpl + ".html"
 	t, err := loadTemplate(l, v)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
