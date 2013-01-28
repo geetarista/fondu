@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"go/build"
 	"net/http"
 	"os"
 	"text/template"
@@ -55,8 +56,10 @@ func loadTemplate(layout, tmpl string) (t *template.Template, err error) {
 }
 
 func renderTemplate(w http.ResponseWriter, tmpl string, tmplData interface{}) {
-	l := "views/simple/base.html"
-	v := "views/" + tmpl + ".html"
+	pkg, _ := build.Import("github.com/geetarista/fondu", "", build.FindOnly)
+
+	l := pkg.Dir + "/views/simple/base.html"
+	v := pkg.Dir + "/views/" + tmpl + ".html"
 	t, err := loadTemplate(l, v)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
