@@ -3,6 +3,7 @@ package main
 import (
 	"io"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"regexp"
@@ -130,6 +131,7 @@ func simpleHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Public package, so just render the proxy
 	if pkg.Proxied() {
+		log.Print("Proxied package. Sending cached data.")
 		go updateProxyCache(w, pkg)
 		renderProxy(w, pkg)
 		return
