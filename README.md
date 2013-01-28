@@ -62,6 +62,10 @@ port = 3638
 pypi_mirror = http://pypi.python.org
 ```
 
+## Demo
+
+See the [demo](https://github.com/geetarista/fondu/tree/master/demo) directory for information on how to use [Vagrant](http://www.vagrantup.com/) to run Fondu locally.
+
 ## Thanks
 
 Based on original Python version by [Mitchell Hashimoto](http://mitchellh.com).
