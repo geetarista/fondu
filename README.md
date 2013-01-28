@@ -32,9 +32,9 @@ index-servers =
   fondu
 
 [fondu]
-username: foo
-password: bar
-repository: http://your-host:3638/
+username = foo
+password = bar
+repository = http://your-host:3638/
 ```
 
 Note that username and password must be passed to pip, but fondu does not support authentication at this time.
