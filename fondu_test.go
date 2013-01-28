@@ -20,7 +20,7 @@ func TestCachedFileHandlerExists(t *testing.T) {
 
 	// Making a round-trip request to not follow the redirect
 	tr := &http.Transport{}
-	req, err := http.NewRequest("GET", server.URL+"/fondu/cached-file/proxypackage-1.0.0.tar.gz?package=proxypackage&version=1.0.0&original=test.com", nil)
+	req, err := http.NewRequest("GET", server.URL+"/fondu/cached-file/proxypackage-1.0.0.tar.gz?package=proxypackage&release=1.0.0&original=test.com", nil)
 	res, err := tr.RoundTrip(req)
 	failIfError(t, err)
 
@@ -34,7 +34,7 @@ func TestCachedFileHandlerDownload(t *testing.T) {
 	// Making a round-trip request to not follow the redirect
 	tr := &http.Transport{}
 	c := &http.Client{Transport: tr}
-	res, err := c.Get(server.URL + "/fondu/cached-file/test-1.0.0.tar.gz?package=test&version=1.0.0&original=/file/test/test.tar.gz")
+	res, err := c.Get(server.URL + "/fondu/cached-file/test-1.0.0.tar.gz?package=test&release=1.0.0&original=/file/test/test.tar.gz")
 	failIfError(t, err)
 
 	assertEqual(t, "cached file handler download", res.StatusCode, http.StatusInternalServerError)
