@@ -17,7 +17,7 @@ Fondu is a [CheeseShop](http://wiki.python.org/moin/CheeseShop) server powered b
 Install Fondu:
 
 ```shell
-go install github.com/geetarista/fondu
+go get github.com/geetarista/fondu
 ```
 
 ## Usage
