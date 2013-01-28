@@ -44,7 +44,7 @@ func cachedFileHandler(w http.ResponseWriter, r *http.Request) {
 	name := paths[len(paths)-1]
 	release := Release{
 		Name:     r.FormValue("package"),
-		Version:  r.FormValue("version"),
+		Version:  r.FormValue("release"),
 		DataDir:  Config.DataDir,
 		Filename: name,
 	}
