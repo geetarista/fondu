@@ -59,7 +59,7 @@ func renderTemplate(w http.ResponseWriter, tmpl string, tmplData interface{}) {
 	dir := ""
 	pkg, _ := build.Import("github.com/geetarista/fondu", "", build.FindOnly)
 
-	if pkg != "" {
+	if pkg.Dir != "" {
 		dir = pkg.Dir
 	} else {
 		dir = "."
