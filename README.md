@@ -7,7 +7,7 @@ Fondu is a [CheeseShop](http://wiki.python.org/moin/CheeseShop) server powered b
 * Cache packages from [PyPi](http://pypi.python.org/) in case of failure
 * Install packages faster inside your network
 * Store private packages
-* easy install/pip compliant
+* easy_install/pip compliant
 * setup.py register|upload compatible
 
 ## Installation
@@ -24,7 +24,7 @@ go get github.com/geetarista/fondu
 
 To start Fondu, all you have to do use the `fondu` command.
 
-For registering/uploading, you need to tell distutils in ~/.pypirc:
+For register/upload, you need to tell distutils where to look in `~/.pypirc`:
 
 ```ini
 [distutils]
@@ -38,6 +38,12 @@ repository = http://your-host:3638/
 ```
 
 Note that username and password must be passed to pip, but fondu does not support authentication at this time.
+
+When installing packages, you must tell pip to use your Fondu index:
+
+```bash
+export PIP_INDEX_URL=http://your-host:3638/simple/
+```
 
 ## Configure
 
