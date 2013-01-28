@@ -26,7 +26,7 @@ var rePackageUrl = regexp.MustCompile(`(?i)<a href=\"(?P<url>.+?)#md5=.+?\">(?P<
 var reDownloadUrl = regexp.MustCompile(`(?i)<a href=\"(?P<url>.+?)\"\s+rel=\"download\">(?P<version>.+?) download_url</a>`)
 
 func simpleIndexHandler(w http.ResponseWriter, r *http.Request) {
-	renderTemplate(w, "simple/index", nil)
+	renderTemplate(w, "index", nil)
 }
 
 func getPage(url string) downloadResult {
@@ -123,7 +123,7 @@ func simpleHandler(w http.ResponseWriter, r *http.Request) {
 	// The package is ours, so we serve it ourselves.
 	if pkg.Exists() && !pkg.Proxied() {
 		releaseMap := buildReleaseMap(pkg)
-		renderTemplate(w, "simple/single", &releaseMap)
+		renderTemplate(w, "single", &releaseMap)
 		return
 	}
 

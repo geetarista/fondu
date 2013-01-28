@@ -1,76 +1,41 @@
 package main
 
 import (
-	"errors"
-	"go/build"
 	"net/http"
-	"os"
 	"text/template"
-	"time"
 )
 
-var tmplCache = make(map[string]*tmplInfo)
-
-type tmplInfo struct {
-	tmpl  *template.Template
-	mtime int64
-}
-
-func checkTemplateExists(path string) (mtime int64, err error) {
-	dir, err := os.Stat(path)
-	if err != nil {
-		return time.Now().Unix(), err
-	}
-	if dir.IsDir() {
-		return time.Now().Unix(), errors.New("'" + path + "' is not a regular file")
-	}
-
-	return dir.ModTime().Unix(), nil
-}
-
-func loadTemplate(layout, tmpl string) (t *template.Template, err error) {
-	key := layout + "-" + tmpl
-	lmt, err := checkTemplateExists(layout)
-	if err != nil {
-		return nil, err
-	}
-	vmt, err := checkTemplateExists(tmpl)
-	if err != nil {
-		return nil, err
-	}
-	ti, _ := tmplCache[key]
-	if ti == nil || lmt > ti.mtime || vmt > ti.mtime {
-
-		t, err := template.ParseFiles(layout, tmpl)
-		if err != nil {
-			return nil, err
-		}
-
-		ti = &tmplInfo{
-			mtime: time.Now().Unix(),
-			tmpl:  t,
-		}
-		tmplCache[key] = ti
-	}
-	return ti.tmpl, nil
+var templates = map[string]string{
+	"base": `<html>
+<head>
+  <title>Fondu</title>
+</head>
+<body>
+  {{ template "content" . }}
+</body>
+</html>`,
+	"index": `{{ define "content" }}
+<!-- TODO: List all packages -->
+{{ end }}`,
+	"single": `{{ define "content" }}
+<ul>
+{{ range . }}
+{{ if .DownloadUrl }}
+  <li><a href="{{ .DownloadUrl }}" rel="download">{{ .Version }} download</a></li>
+{{ end }}
+{{ if .Path }}
+  <li><a href="/file/{{ .Path }}#md5={{ .Md5 }}">{{ .Version }}</a></li>
+{{ end }}
+{{ end }}
+</ul>
+{{ end }}`,
 }
 
 func renderTemplate(w http.ResponseWriter, tmpl string, tmplData interface{}) {
-	dir := ""
-	pkg, _ := build.Import("github.com/geetarista/fondu", "", build.FindOnly)
+	t, err := template.New(tmpl).Parse(templates["base"] + templates[tmpl])
 
-	if pkg.Dir != "" {
-		dir = pkg.Dir
-	} else {
-		dir = "."
-	}
-
-	l := dir + "/views/simple/base.html"
-	v := dir + "/views/" + tmpl + ".html"
-	t, err := loadTemplate(l, v)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
 	}
 
 	if err := t.Execute(w, tmplData); err != nil {
