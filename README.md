@@ -8,7 +8,7 @@ Fondu is a [CheeseShop](http://wiki.python.org/moin/CheeseShop) server powered b
 * Install packages faster inside your network
 * Store private packages
 * easy_install/pip compliant
-* setup.py register|upload compatible
+* setup.py register/upload compatible
 
 ## Installation
 
@@ -57,7 +57,7 @@ An example configuration file looks like this (defaults shown):
 
 ```ini
 [fondu]
-data_directory = /data/fondu
+data_directory = data
 port = 3638
 pypi_mirror = http://pypi.python.org
 ```
