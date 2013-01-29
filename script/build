@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # Adapted from: https://github.com/davecheney/golang-crosscompile
 
+set -e
+
 PLATFORMS="darwin/386 darwin/amd64 freebsd/386 freebsd/amd64 freebsd/arm linux/386 linux/amd64 linux/arm windows/386 windows/amd64"
 
 eval "$(go env)"
@@ -16,15 +18,17 @@ for PLATFORM in $PLATFORMS; do
 done
 
 mkdir -p bin
+
+cd src
+
 for PLATFORM in ${PLATFORMS}; do
-    mkdir -p bin/${PLATFORM}
     GOOS=${PLATFORM%/*}
     GOARCH=${PLATFORM#*/}
     CMD="go-${GOOS}-${GOARCH} build"
     echo "$CMD"
     $CMD
-    if [ -x fondu ]; then mv fondu bin/$PLATFORM; fi
-    if [ -x fondu.exe ]; then mv fondu.exe bin/$PLATFORM; fi
+    if [ -x src ]; then mv src ../bin/fondu-$GOOS-$GOARCH; fi
+    if [ -x src.exe ]; then mv src.exe ../bin/fondu-$GOOS-$GOARCH; fi
 done
 
 unset -f go-alias
