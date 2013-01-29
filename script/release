@@ -3,5 +3,5 @@
 set -e
 
 for file in bin/*; do
-  s3cmd put $file s3://fondu
+  s3cmd --acl-public put $file s3://fondu
 done
