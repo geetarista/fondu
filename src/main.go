@@ -32,9 +32,18 @@ func init() {
 			log.Println("Unable to load config from: " + configFile)
 			return
 		}
-		Config.DataDir, _ = c.String("fondu", "data_dir")
-		Config.Port, _ = c.String("fondu", "port")
-		Config.PypiMirror, _ = c.String("fondu", "pypi_mirror")
+		d, _ := c.String("fondu", "data_dir")
+		if d != "" {
+			Config.DataDir = d
+		}
+		p, _ := c.String("fondu", "port")
+		if p != "" {
+			Config.Port = p
+		}
+		m, _ := c.String("fondu", "pypi_mirror")
+		if m != "" {
+			Config.PypiMirror = m
+		}
 	}
 }
 
