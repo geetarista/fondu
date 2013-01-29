@@ -30,6 +30,7 @@ func simpleIndexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func getPage(url string) downloadResult {
+	log.Println("Downloading page: " + url)
 	res, err := http.Get(url)
 	if err != nil {
 		return downloadResult{Page: []byte(""), Error: err}
@@ -42,6 +43,7 @@ func getPage(url string) downloadResult {
 }
 
 func updateProxyCache(w http.ResponseWriter, pkg Package) error {
+	log.Println("Updating proxy cache for: " + pkg.Name)
 	url := Config.PypiMirror + "/simple/" + pkg.Name
 
 	result := getPage(url)
@@ -56,6 +58,7 @@ func updateProxyCache(w http.ResponseWriter, pkg Package) error {
 }
 
 func finalizeCache(w http.ResponseWriter, pkg Package, data []byte) {
+	log.Println("Finalizing cache for: " + pkg.Name)
 	returnData := string(data)
 	// Replace the local package links with links to a local proxy
 	// so we can cache that result as well.
@@ -89,6 +92,7 @@ func finalizeCache(w http.ResponseWriter, pkg Package, data []byte) {
 }
 
 func renderProxy(w http.ResponseWriter, pkg Package) {
+	log.Println("Rendering proxy for: " + pkg.Name)
 	io.WriteString(w, string(pkg.ProxyData()))
 }
 

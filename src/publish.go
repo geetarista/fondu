@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 )
 
@@ -20,6 +21,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 func registerHandler(w http.ResponseWriter, r *http.Request) {
 	name := r.FormValue("name")
 	version := r.FormValue("version")
+	log.Println("Registering: " + name + "-" + version)
 	pkg := Package{Name: name}
 	dataDir := Config.DataDir
 
@@ -32,7 +34,7 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 	jsonData, _ := json.Marshal(r.Form)
 	err := rel.StoreMetadata(jsonData)
 	if err != nil {
-		println("Failed to write metadata to: " + rel.MetadataFile())
+		log.Println("Failed to write metadata to: " + rel.MetadataFile())
 	}
 }
 
@@ -40,6 +42,7 @@ func fileUploadHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseMultipartForm(1024)
 	name := r.FormValue("name")
 	version := r.FormValue("version")
+	log.Println("Uploading: " + name + "-" + version)
 	content, _, _ := r.FormFile("content")
 
 	if content == nil {

@@ -13,12 +13,12 @@ type pageResult struct {
 
 func redirectToFile(w http.ResponseWriter, r *http.Request, release Release) {
 	url := "/file/" + release.Path()
-	log.Printf("Redirecting to file: " + url)
+	log.Println("Redirecting to file: " + url)
 	http.Redirect(w, r, url, http.StatusFound)
 }
 
 func downloadPage(url, file string) pageResult {
-	log.Printf("File doesn't exist yet. Downloading: " + url)
+	log.Println("File doesn't exist yet. Downloading: " + url)
 	res, err := http.Get(url)
 	if err != nil {
 		return pageResult{Error: err}
@@ -50,7 +50,7 @@ func cachedFileHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if release.Exists() {
-		log.Printf(release.Filename + "already exists. Redirecting to download.")
+		log.Println(release.Filename + "already exists. Redirecting to download.")
 		redirectToFile(w, r, release)
 		return
 	}

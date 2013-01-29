@@ -5,9 +5,9 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
+	"mime/multipart"
 	"os"
 	"path/filepath"
-	"mime/multipart"
 )
 
 type Release struct {
@@ -81,7 +81,7 @@ func (r Release) StoreMetadata(data []byte) error {
 func (r Release) StoreRelease(data multipart.File) {
 	f, err := os.Create(r.ReleaseFilePath())
 	if err != nil {
-		log.Printf("Can't open file: " + r.ReleaseFilePath())
+		log.Println("Can't open file: " + r.ReleaseFilePath())
 		return
 	}
 	defer f.Close()
@@ -92,7 +92,7 @@ func (r Release) StoreRelease(data multipart.File) {
 		n, err := data.Read(buf)
 
 		if err != nil && err != io.EOF {
-			log.Printf("Couldn't write file: " + r.ReleaseFilePath())
+			log.Println("Couldn't write file: " + r.ReleaseFilePath())
 			break
 		}
 
@@ -101,7 +101,7 @@ func (r Release) StoreRelease(data multipart.File) {
 		}
 
 		if _, err := f.Write(buf[:n]); err != nil {
-			log.Printf("Couldn't write file: " + r.ReleaseFilePath())
+			log.Println("Couldn't write file: " + r.ReleaseFilePath())
 			break
 		}
 	}

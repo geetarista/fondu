@@ -54,6 +54,6 @@ func main() {
 	http.HandleFunc("/fondu/cached-file/", cachedFileHandler)
 	http.HandleFunc("/", rootHandler)
 	http.HandleFunc("*", http.NotFound)
-	log.Printf("Starting fondu on port " + Config.Port)
+	log.Println("Starting fondu on port " + Config.Port)
 	http.ListenAndServe(":"+Config.Port, nil)
 }
