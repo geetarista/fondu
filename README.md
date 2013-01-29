@@ -12,13 +12,13 @@ Fondu is a [CheeseShop](http://wiki.python.org/moin/CheeseShop) server powered b
 
 ## Installation
 
-[Install Go](http://golang.org/doc/install).
-
-Install Fondu:
+Just download the binary for your platform. Example:
 
 ```shell
-go get github.com/geetarista/fondu
+wget -O fondu http://s3.amazonaws.com/fondu/fondu-linux-amd64
 ```
+
+See [Platforms.md](https://github.com/geetarista/fondu/tree/master/Platforms.md) for more information.
 
 ## Usage
 
