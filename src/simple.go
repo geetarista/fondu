@@ -141,6 +141,7 @@ func simpleHandler(w http.ResponseWriter, r *http.Request) {
 
 	if err := updateProxyCache(w, pkg); err != nil {
 		http.Error(w, "Unable to update proxy", http.StatusInternalServerError)
+		return
 	}
 
 	renderProxy(w, pkg)
