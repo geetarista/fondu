@@ -42,6 +42,7 @@ func downloadPage(url, file string) pageResult {
 func cachedFileHandler(w http.ResponseWriter, r *http.Request) {
 	paths := strings.Split(r.URL.Path, "/")
 	name := paths[len(paths)-1]
+	log.Println("Request for cached file: " + name)
 	release := Release{
 		Name:     r.FormValue("package"),
 		Version:  r.FormValue("release"),
