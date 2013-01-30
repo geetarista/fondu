@@ -22,14 +22,13 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 	name := r.FormValue("name")
 	version := r.FormValue("version")
 	log.Println("Registering: " + name + "-" + version)
-	pkg := Package{Name: name}
-	dataDir := Config.DataDir
+	pkg := Package{Name: name, DataDir: Config.DataDir}
 
 	if pkg.Proxied() {
 		pkg.Delete()
 	}
 
-	rel := Release{Name: name, Version: version, DataDir: dataDir}
+	rel := Release{Name: name, Version: version, DataDir: pkg.DataDir}
 	r.ParseForm()
 	jsonData, _ := json.Marshal(r.Form)
 	err := rel.StoreMetadata(jsonData)
@@ -47,6 +46,7 @@ func fileUploadHandler(w http.ResponseWriter, r *http.Request) {
 
 	if content == nil {
 		http.Error(w, "No content provided", http.StatusBadRequest)
+		return
 	}
 
 	pkg := Package{Name: name, DataDir: Config.DataDir}

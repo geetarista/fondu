@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 cd src
-go test
+rm -rf ./data/
+gocov test . | gocov-html > coverage.html
 rm -rf ./data/
 if [ -f src.test ]; then rm src.test; fi
 cd ..

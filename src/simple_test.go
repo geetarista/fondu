@@ -19,7 +19,24 @@ func TestSimpleIndexHandler(t *testing.T) {
 	assertEqual(t, "simple index", res.StatusCode, 200)
 }
 
-func TestSimpleSingleHandler(t *testing.T) {
+func TestGetPage(t *testing.T) {
+}
+
+func TestSimpleSingleHandlerPrivate(t *testing.T) {
+	privatePackage.SetProxy(testBytes)
+	server := httptest.NewServer(http.HandlerFunc(simpleHandler))
+	defer server.Close()
+
+	res, err := http.Get(server.URL + "/simple/privatepackage/")
+	failIfError(t, err)
+	body, err := ioutil.ReadAll(res.Body)
+	failIfError(t, err)
+
+	assertEqual(t, "simple single status", res.StatusCode, 200)
+	assertContains(t, "simple single body", string(testBytes), string(body))
+}
+
+func TestSimpleSingleHandlerProxied(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(simpleHandler))
 	defer server.Close()
 

@@ -55,6 +55,8 @@ var proxyRelease = Release{
 	DataDir:  Config.DataDir,
 	Filename: "proxypackage-1.0.0.tar.gz",
 }
+var privatePackage = Package{Name: "privatepackage", DataDir: Config.DataDir}
+var privateRelease = Release{Name: privatePackage.Name, DataDir: privatePackage.DataDir}
 var testBytes = []byte{'t', 'e', 's', 't', '\n'}
 
 func failIfError(t *testing.T, err error) {

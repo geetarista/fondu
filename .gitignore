@@ -2,3 +2,4 @@
 src/src
 .vagrant
 bin
+src/coverage.html
