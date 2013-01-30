@@ -38,7 +38,12 @@ func (p Package) Directory() string {
 }
 
 func (p Package) Release(version string) Release {
-	return Release{Name: p.Name, Version: version, DataDir: p.DataDir}
+	return Release{
+		Name: p.Name,
+		Version: version,
+		DataDir: p.DataDir,
+		Filename: p.Name + "-" + version + ".tar.gz",
+	}
 }
 
 func (p Package) Exists() bool {

@@ -29,5 +29,5 @@ func TestSimpleSingleHandler(t *testing.T) {
 	failIfError(t, err)
 
 	assertEqual(t, "simple single status", res.StatusCode, 200)
-	assertContains(t, "simple single body", `<a href="/file/proxypackage/1.0.0/#md5=abc123">1.0.0</a>`, string(body))
+	assertContains(t, "simple single body", `<a href="/file/proxypackage/1.0.0/proxypackage-1.0.0.tar.gz#md5=abc123">1.0.0</a>`, string(body))
 }

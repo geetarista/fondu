@@ -3,5 +3,5 @@
 cd src
 go test
 rm -rf ./data/
-if [ -f fondu.test ]; then rm fondu.test; fi
+if [ -f src.test ]; then rm src.test; fi
 cd ..

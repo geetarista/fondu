@@ -23,7 +23,7 @@ func TestEmptyReleases(t *testing.T) {
 
 func TestValidReleases(t *testing.T) {
 	got := validPackage.Releases()
-	want := []Release{Release{Name: validPackage.Name, Version: "1.0.0", DataDir: validPackage.DataDir}}
+	want := []Release{Release{Name: validPackage.Name, Version: "1.0.0", DataDir: validPackage.DataDir, Filename: "validpackage-1.0.0.tar.gz"}}
 	assertEqual(t, "valid releases", got, want)
 }
 
@@ -35,7 +35,7 @@ func TestProjectDirectory(t *testing.T) {
 }
 
 func TestRelease(t *testing.T) {
-	want := Release{Name: validPackage.Name, Version: "1.0.0", DataDir: validPackage.DataDir}
+	want := Release{Name: validPackage.Name, Version: "1.0.0", DataDir: validPackage.DataDir, Filename: "validpackage-1.0.0.tar.gz"}
 	got := validPackage.Release("1.0.0")
 
 	assertEqual(t, "release", got, want)
