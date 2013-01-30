@@ -21,9 +21,6 @@ func (p Package) Releases() (releases []Release) {
 	for _, v := range versions {
 		stat, _ := os.Stat(v)
 		filename := stat.Name()
-		if string(filename[0]) == "." {
-			continue
-		}
 
 		if stat.IsDir() == true {
 			releases = append(releases, p.Release(filename))
