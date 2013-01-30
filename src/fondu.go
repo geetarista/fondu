@@ -51,7 +51,7 @@ func cachedFileHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if release.Exists() {
-		log.Println(release.Filename + "already exists. Redirecting to download.")
+		log.Println(release.Filename + " already exists. Redirecting to download.")
 		redirectToFile(w, r, release)
 		return
 	}
