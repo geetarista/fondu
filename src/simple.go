@@ -23,7 +23,7 @@ type releaseView struct {
 }
 
 var rePackageUrl = regexp.MustCompile(`(?i)<a href=\"(?P<url>.+?)#md5=.+?\">(?P<filename>.+?)</a>`)
-var reDownloadUrl = regexp.MustCompile(`(?i)<a href=\"(?P<url>.+?)\"\s+rel=\"download\">(?P<version>.+?) download_url</a>`)
+var reDownloadUrl = regexp.MustCompile(`(?i)<a href=\"(?P<url>.+?)\"\s+rel=\".+\">(?P<version>.+?) download_url</a>`)
 
 func simpleIndexHandler(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "index", nil)
@@ -44,7 +44,7 @@ func getPage(url string) downloadResult {
 
 func updateProxyCache(w http.ResponseWriter, pkg Package) error {
 	log.Println("Updating proxy cache for: " + pkg.Name)
-	url := Config.PypiMirror + "/simple/" + pkg.Name
+	url := Config.PypiMirror + "/simple/" + pkg.Name + "/"
 
 	result := getPage(url)
 
@@ -78,7 +78,7 @@ func finalizeCache(w http.ResponseWriter, pkg Package, data []byte) {
 
 	// Replace the download links with links to a local proxy so that
 	// we can cache the downloads as well.
-	downloadUrls := reDownloadUrl.FindAll(data, -1)
+	downloadUrls := reDownloadUrl.FindAllSubmatch(data, -1)
 	for _, line := range downloadUrls {
 		uri := line[1]
 		version := line[2]
@@ -126,6 +126,7 @@ func simpleHandler(w http.ResponseWriter, r *http.Request) {
 
 	// The package is ours, so we serve it ourselves.
 	if pkg.Exists() && !pkg.Proxied() {
+		log.Print("Private package: " + name + ". Serving it.")
 		releaseMap := buildReleaseMap(pkg)
 		renderTemplate(w, "single", &releaseMap)
 		return
