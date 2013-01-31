@@ -42,7 +42,7 @@ func getPage(url string) downloadResult {
 	return downloadResult{Page: page, Error: err}
 }
 
-func updateProxyCache(w http.ResponseWriter, pkg Package) error {
+func updateProxyCache(pkg Package) error {
 	log.Println("Updating proxy cache for: " + pkg.Name)
 	url := Config.PypiMirror + "/simple/" + pkg.Name + "/"
 
@@ -53,11 +53,11 @@ func updateProxyCache(w http.ResponseWriter, pkg Package) error {
 		return result.Error
 	}
 
-	finalizeCache(w, pkg, result.Page)
+	finalizeCache(pkg, result.Page)
 	return nil
 }
 
-func finalizeCache(w http.ResponseWriter, pkg Package, data []byte) {
+func finalizeCache(pkg Package, data []byte) {
 	log.Println("Finalizing cache for: " + pkg.Name)
 	returnData := string(data)
 	// Replace the local package links with links to a local proxy
@@ -135,12 +135,12 @@ func simpleHandler(w http.ResponseWriter, r *http.Request) {
 	// Public package, so just render the proxy
 	if pkg.Proxied() {
 		log.Print("Proxied package: " + name + ". Sending cached data.")
-		go updateProxyCache(w, pkg)
+		go updateProxyCache(pkg)
 		renderProxy(w, pkg)
 		return
 	}
 
-	if err := updateProxyCache(w, pkg); err != nil {
+	if err := updateProxyCache(pkg); err != nil {
 		http.Error(w, "Unable to update proxy", http.StatusInternalServerError)
 		return
 	}
