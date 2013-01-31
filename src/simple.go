@@ -134,7 +134,7 @@ func simpleHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Public package, so just render the proxy
 	if pkg.Proxied() {
-		log.Print("Proxied package. Sending cached data.")
+		log.Print("Proxied package: " + name + ". Sending cached data.")
 		go updateProxyCache(w, pkg)
 		renderProxy(w, pkg)
 		return
