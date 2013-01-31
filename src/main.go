@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"github.com/kless/goconfig/config"
+	"github.com/kless/goconfig"
 	"log"
 	"net/http"
 )
