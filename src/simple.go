@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"strconv"
 	"strings"
 )
 
@@ -95,7 +96,8 @@ func renderProxy(w http.ResponseWriter, pkg Package) {
 	log.Println("Rendering proxy for: " + pkg.Name)
 	data := string(pkg.ProxyData())
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	w.Header().Set("Content-Length", string(len(data)))
+	w.Header().Set("Content-Length", strconv.Itoa(len(data)))
+	w.Header().Set("Connection", "keep-alive")
 	io.WriteString(w, data)
 }
 
