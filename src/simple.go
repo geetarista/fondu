@@ -93,7 +93,10 @@ func finalizeCache(pkg Package, data []byte) {
 
 func renderProxy(w http.ResponseWriter, pkg Package) {
 	log.Println("Rendering proxy for: " + pkg.Name)
-	io.WriteString(w, string(pkg.ProxyData()))
+	data := string(pkg.ProxyData())
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	w.Header().Set("Content-Length", string(len(data)))
+	io.WriteString(w, data)
 }
 
 func buildReleaseMap(pkg Package) []releaseView {
