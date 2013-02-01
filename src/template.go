@@ -34,6 +34,7 @@ var templates = map[string]string{
 
 func renderTemplate(w http.ResponseWriter, tmpl string, tmplData interface{}) {
 	log.Println("Rendering template: " + tmpl)
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	t, err := template.New(tmpl).Parse(templates["base"] + templates[tmpl])
 
 	if err != nil {
