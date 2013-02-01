@@ -12,8 +12,12 @@ type pageResult struct {
 }
 
 func redirectToFile(w http.ResponseWriter, r *http.Request, release Release) {
-	url := "/file/" + release.Path()
-	log.Println("Redirecting to file: " + url)
+	url := ""
+	if release.DownloadUrl() != "" {
+		url = release.DownloadUrl()
+	}
+	url = "/file/" + release.Path()
+	log.Println("Redirecting to: " + url)
 	http.Redirect(w, r, url, http.StatusFound)
 }
 
@@ -38,7 +42,6 @@ func downloadPage(url, file string) pageResult {
 }
 
 // If a file exists, just serve it directly. Otherwise, download, then serve.
-// TODO: should we redirect to download_url if it exists?
 func cachedFileHandler(w http.ResponseWriter, r *http.Request) {
 	paths := strings.Split(r.URL.Path, "/")
 	name := paths[len(paths)-1]
