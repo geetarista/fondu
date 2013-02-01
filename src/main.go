@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"github.com/robfig/goconfig"
+	"github.com/robfig/config"
 	"log"
 	"net/http"
 )
