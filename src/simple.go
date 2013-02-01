@@ -120,8 +120,9 @@ func buildReleaseMap(pkg Package) []releaseView {
 }
 
 func simpleHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("SIMPLE: " + r.URL.Path)
 	paths := strings.Split(r.URL.Path, "/")
-	name := paths[len(paths)-2]
+	name := paths[2]
 	pkg := Package{Name: name, DataDir: Config.DataDir}
 
 	// The package is ours, so we serve it ourselves.
