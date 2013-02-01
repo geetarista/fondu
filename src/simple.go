@@ -24,7 +24,7 @@ type releaseView struct {
 }
 
 var rePackageUrl = regexp.MustCompile(`(?i)<a href=\"(?P<url>.+?)#md5=.+?\">(?P<filename>.+?)</a>`)
-var reDownloadUrl = regexp.MustCompile(`(?i)<a href=\"(?P<url>.+?)\"\s+rel=\".+\">(?P<version>.+?) download_url</a>`)
+var reDownloadUrl = regexp.MustCompile(`(?i)<a href=\"(?P<url>.+?)\"\s+rel=\"download">(?P<version>.+?) download_url</a>`)
 
 func simpleIndexHandler(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "index", nil)
