@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"text/template"
 )
@@ -32,6 +33,7 @@ var templates = map[string]string{
 }
 
 func renderTemplate(w http.ResponseWriter, tmpl string, tmplData interface{}) {
+	log.Println("Rendering template: " + tmpl)
 	t, err := template.New(tmpl).Parse(templates["base"] + templates[tmpl])
 
 	if err != nil {
