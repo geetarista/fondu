@@ -1,9 +1,10 @@
 package main
 
 import (
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 )
 
@@ -26,21 +27,24 @@ func redirectToFile(w http.ResponseWriter, r *http.Request, release Release) {
 
 func downloadPage(url, file string) pageResult {
 	log.Println("File doesn't exist yet. Downloading: " + url)
-	res, err := http.Get(url)
+	tr := &http.Transport{DisableCompression: true}
+	client := &http.Client{Transport: tr}
+	res, err := client.Get(url)
+
 	if err != nil {
 		log.Println("Error downloading: " + url)
 		return pageResult{Error: err}
 	}
 
 	if file != "" {
-		body, err := ioutil.ReadAll(res.Body)
+		f, err := os.Create(file)
 		if err != nil {
-			log.Println("Error reading body: " + url)
+			log.Printf("Error creating file: " + file)
 			return pageResult{Error: err}
 		}
-		err = ioutil.WriteFile(file, body, 0644)
+		_, err = io.Copy(f, res.Body)
 		if err != nil {
-			log.Println("Error writing file: " + file)
+			log.Printf("Error writing to: " + file)
 			return pageResult{Error: err}
 		}
 	}
