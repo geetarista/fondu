@@ -4,6 +4,7 @@ import (
 	"flag"
 	"github.com/robfig/config"
 	"log"
+	"mime"
 	"net/http"
 )
 
@@ -48,6 +49,7 @@ func init() {
 }
 
 func main() {
+	mime.AddExtensionType(".gz", "application/x-gzip")
 	http.HandleFunc("/simple", simpleIndexHandler)
 	http.HandleFunc("/simple/", simpleHandler)
 	http.Handle("/file/", http.StripPrefix("/file", http.FileServer(http.Dir(Config.DataDir))))
