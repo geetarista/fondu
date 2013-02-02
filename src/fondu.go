@@ -28,16 +28,19 @@ func downloadPage(url, file string) pageResult {
 	log.Println("File doesn't exist yet. Downloading: " + url)
 	res, err := http.Get(url)
 	if err != nil {
+		log.Println("Error downloading: " + url)
 		return pageResult{Error: err}
 	}
 
 	if file != "" {
 		body, err := ioutil.ReadAll(res.Body)
 		if err != nil {
+			log.Println("Error reading body: " + url)
 			return pageResult{Error: err}
 		}
 		err = ioutil.WriteFile(file, body, 0644)
 		if err != nil {
+			log.Println("Error writing file: " + file)
 			return pageResult{Error: err}
 		}
 	}
