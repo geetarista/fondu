@@ -144,6 +144,11 @@ func simpleHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if len(paths) == 5 && paths[len(paths)-1] == "" {
+		http.NotFound(w, r)
+		return
+	}
+
 	name := paths[2]
 	pkg := Package{Name: name, DataDir: Config.DataDir}
 
