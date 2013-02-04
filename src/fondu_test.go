@@ -24,7 +24,7 @@ func TestCachedFileHandlerExists(t *testing.T) {
 	res, err := tr.RoundTrip(req)
 	failIfError(t, err)
 
-	assertEqual(t, "cached file handler exists", res.StatusCode, http.StatusFound)
+	assertEqual(t, "cached file handler exists", res.StatusCode, http.StatusMovedPermanently)
 }
 
 func TestCachedFileHandlerDownload(t *testing.T) {

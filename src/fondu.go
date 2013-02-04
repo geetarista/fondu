@@ -21,7 +21,7 @@ func redirectToFile(w http.ResponseWriter, r *http.Request, release Release) {
 		url = "/file/" + release.Path()
 	}
 	log.Println("Redirecting to: " + url)
-	http.Redirect(w, r, url, http.StatusFound)
+	http.Redirect(w, r, url, http.StatusMovedPermanently)
 	return
 }
 
