@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strconv"
 	"strings"
 )
 
@@ -21,11 +20,8 @@ func redirectToFile(w http.ResponseWriter, r *http.Request, release Release) {
 	} else {
 		url = "/file/" + release.Path()
 	}
-	html := `<html><head><meta http-equiv="refresh" content="0;URL=` + url + `"></head><body><a href="` + url + `">click here</a></body></html>`
 	log.Println("Redirecting to: " + url)
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	w.Header().Set("Content-Length", strconv.Itoa(len(html)))
-	io.WriteString(w, html)
+	http.Redirect(w, r, url, http.StatusMovedPermanently)
 	return
 }
 
