@@ -129,13 +129,22 @@ func simpleHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("SIMPLE: " + r.URL.Path)
 	paths := strings.Split(r.URL.Path, "/")
 
-	if len(paths) != 4 || paths[len(paths)-1] != "" {
+	if len(paths) == 3 && paths[len(paths)-1] == "" {
+		simpleIndexHandler(w, r)
+		return
+	}
+
+	if len(paths) == 3 && paths[len(paths)-1] != "" {
 		http.NotFound(w, r)
 		return
 	}
 
-	name := paths[2]
+	if len(paths) == 4 && paths[len(paths)-1] != "" {
+		http.Redirect(w, r, r.URL.Path+"/", http.StatusMovedPermanently)
+		return
+	}
 
+	name := paths[2]
 	pkg := Package{Name: name, DataDir: Config.DataDir}
 
 	// The package is ours, so we serve it ourselves.
