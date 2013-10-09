@@ -1,4 +1,4 @@
-# Fondu ![Build Status](https://travis-ci.org/geetarista/fondu.png)
+# Fondu [![Build Status](https://drone.io/github.com/geetarista/fondu/status.png)](https://drone.io/github.com/geetarista/fondu/latest)
 
 Fondu is a [CheeseShop](http://wiki.python.org/moin/CheeseShop) server powered by [Go](http://golang.org/).
 
