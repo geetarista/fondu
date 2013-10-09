@@ -16,7 +16,7 @@ func TestRootGet(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(rootHandler))
 	defer server.Close()
 
-	res, err := http.Get(server.URL+"/")
+	res, err := http.Get(server.URL + "/")
 	failIfError(t, err)
 
 	assertEqual(t, "root get", res.StatusCode, http.StatusMethodNotAllowed)

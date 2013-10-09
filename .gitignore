@@ -1,5 +1,7 @@
 .DS_Store
-src/src
+src
 .vagrant
 bin
-src/coverage.html
+coverage.html
+fondu
+data/
