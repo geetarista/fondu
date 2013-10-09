@@ -2,11 +2,15 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"github.com/robfig/config"
 	"log"
 	"mime"
 	"net/http"
+	"os"
 )
+
+const VERSION = "0.1.0"
 
 var configFile string
 
@@ -25,7 +29,13 @@ var Config = fonduConfig{
 // Parse flags and set up configuration
 func init() {
 	flag.StringVar(&configFile, "f", "", "path to a configuration file")
+	version := flag.Bool("v", false, "prints current fondu version")
 	flag.Parse()
+
+	if *version {
+		fmt.Println(VERSION)
+		os.Exit(0)
+	}
 
 	if configFile != "" {
 		c, err := config.ReadDefault(configFile)
