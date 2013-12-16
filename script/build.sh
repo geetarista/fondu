@@ -4,9 +4,11 @@ PLATFORMS="darwin/386 darwin/amd64 freebsd/386 freebsd/amd64 freebsd/arm linux/3
 
 set -e
 
-mkdir -p bin
-
 for platform in $PLATFORMS; do
-  CGO_ENABLED=0 GOOS=${platform%/*} GOARCH=${platform#*/}
-  go build -o bin/$GOOS-$GOARCH
+  goos=${platform%/*}
+  goarch=${platform#*/}
+  output="${goos}-${goarch}"
+  echo "Building ${output}..."
+
+  CGO_ENABLED=0 GOOS=$goos GOARCH=$goarch go build -o bin/$output
 done
