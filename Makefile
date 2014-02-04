@@ -31,6 +31,7 @@ release: all
 	@bash --norc -i ./release.sh $(VERSION)
 
 test: clean deps format
+	@echo "$(OK_COLOR)==> Testing Fondu...$(NO_COLOR)"
 	go test -cover
 	@rm -rf data
 	@if [ -f fondu.test ]; then rm fondu.test; fi
