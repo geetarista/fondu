@@ -24,11 +24,15 @@ To start Fondu, all you have to do use the `fondu` command.
 
 You can pass Fondu a few flags to override settings:
 
-`d` Overrides the directory to store data. Default: `data`
+`-d` Overrides the directory to store data. Default: `data`
 
-`p` The port for Fondu to listen on. Default: 3638
+`-p` The port for Fondu to listen on. Default: `3638`
 
-`m` The pypi mirror to use. Default: http://pypi.python.org
+`-m` The pypi mirror to use. Default: `http://pypi.python.org`
+
+Example:
+
+`fondu -d /data/fondu -p 8363 -m http://pypi.example.com`
 
 ## Uploading
 
@@ -45,17 +49,11 @@ password = bar
 repository = http://your-host:3638/
 ```
 
-Or you can just set it when uploading inline:
+Or you can just set it using a flag to sdist or an environment variable:
 
 ```bash
-python setup.py sdist upload -r fondu
 python setup.py sdist upload -r http://your-host:3638/
-```
-
-Or as an environment variable:
-
-```bash
-export PIP_INDEX_URL=http://your-host:3638/simple/
+export PIP_INDEX_URL=http://your-host:3638/simple/ python setup.py sdist upload
 ```
 
 Note that username and password can be passed to pip, but fondu does not support authentication at this time.
