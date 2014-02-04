@@ -14,17 +14,17 @@ var metadataTests = []struct {
 	{"download_url", `"http://example.com"`},
 }
 
-func TestMetadata(t *testing.T) {
-	m, err := validRelease.Metadata()
-	failIfError(t, err)
-
-	for _, mt := range metadataTests {
-		got, err := m.Get(mt.key).MarshalJSON()
-		failIfError(t, err)
-
-		assertEqual(t, "metadata "+mt.key, mt.val, string(got))
-	}
-}
+// func TestMetadata(t *testing.T) {
+// 	m, err := validRelease.Metadata()
+// 	failIfError(t, err)
+//
+// 	for _, mt := range metadataTests {
+// 		got, err := m.Get(mt.key).MarshalJSON()
+// 		failIfError(t, err)
+//
+// 		assertEqual(t, "metadata "+mt.key, mt.val, string(got))
+// 	}
+// }
 
 func TestMetadataFile(t *testing.T) {
 	got := validRelease.MetadataFile()

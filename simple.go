@@ -105,20 +105,10 @@ func renderProxy(w http.ResponseWriter, pkg Package) {
 func buildReleaseMap(pkg Package) []releaseView {
 	releaseMap := []releaseView{}
 	for _, rel := range pkg.Releases() {
-		metadata, err := rel.Metadata()
-		if err != nil {
-			break
-		}
-		md5Json, err := metadata.Get("md5_digest").Array()
-		if err != nil {
-			continue
-		}
-		md5 := md5Json[0]
-
 		releaseMap = append(releaseMap, releaseView{
 			DownloadUrl: rel.DownloadUrl(),
 			Version:     rel.Version,
-			Md5:         md5.(string),
+			Md5:         rel.Md5(),
 			Path:        rel.Path(),
 		})
 	}

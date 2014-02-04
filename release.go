@@ -7,8 +7,12 @@ import (
 	"mime/multipart"
 	"os"
 	"path/filepath"
+	"regexp"
+)
 
-	simplejson "github.com/bitly/go-simplejson"
+var (
+	ReDownloadUrl = regexp.MustCompile(`"download_url":\s?"([^"]+?)"`)
+	ReMd5         = regexp.MustCompile(`"md5_digest":\s?"([^"]+?)"`)
 )
 
 type Release struct {
@@ -18,22 +22,14 @@ type Release struct {
 	Filename string
 }
 
-func (r Release) Metadata() (j *simplejson.Json, err error) {
+func (r Release) Metadata() (data []byte, err error) {
 	metaFile := r.MetadataFile()
 
 	if _, err := os.Stat(metaFile); os.IsNotExist(err) {
-		return j, err
+		return data, err
 	}
 
-	data, err := ioutil.ReadFile(metaFile)
-
-	if err != nil {
-		return j, err
-	}
-
-	j, err = simplejson.NewJson(data)
-
-	return j, err
+	return ioutil.ReadFile(metaFile)
 }
 
 func (r Release) MetadataFile() string {
@@ -51,12 +47,26 @@ func (r Release) DownloadUrl() (url string) {
 		return
 	}
 
-	if json, ok := mdata.CheckGet("download_url"); ok {
-		url, err = json.String()
-		if err != nil {
-			panic(err.Error())
-		}
+	matches := ReDownloadUrl.FindSubmatch(mdata)
+
+	if len(matches) > 1 {
+		url = string(matches[1])
+	}
+
+	return
+}
+
+func (r Release) Md5() (url string) {
+	mdata, err := r.Metadata()
+	if err != nil {
+		// panic(err.Error())
 		return
+	}
+
+	matches := ReMd5.FindSubmatch(mdata)
+
+	if len(matches) > 1 {
+		url = string(matches[1])
 	}
 
 	return

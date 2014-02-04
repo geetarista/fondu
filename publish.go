@@ -56,7 +56,11 @@ func fileUploadHandler(w http.ResponseWriter, r *http.Request) {
 
 	rel := Release{Name: name, Version: version, DataDir: FonduData, Filename: name + "-" + version + ".tar.gz"}
 	r.ParseForm()
-	jsonData, _ := json.Marshal(r.Form)
+	m := map[string]string{}
+	for k, v := range r.Form {
+		m[k] = v[0]
+	}
+	jsonData, _ := json.Marshal(m)
 	rel.StoreMetadata(jsonData)
 	rel.StoreRelease(content)
 }
