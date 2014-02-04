@@ -35,7 +35,7 @@ func TestRegisterHandler(t *testing.T) {
 	_, err := http.PostForm(server.URL+"/", values)
 	failIfError(t, err)
 
-	metadata, err := ioutil.ReadFile(Config.DataDir + "/test/1.0.0/metadata.json")
+	metadata, err := ioutil.ReadFile(FonduData + "/test/1.0.0/metadata.json")
 
 	assertEqual(t, "register handler", string(metadata), `{":action":["submit"],"name":["test"],"version":["1.0.0"]}`)
 }
@@ -54,7 +54,7 @@ func TestRegisterHandlerProxied(t *testing.T) {
 	_, err := http.PostForm(server.URL+"/", values)
 	failIfError(t, err)
 
-	metadata, err := ioutil.ReadFile(Config.DataDir + "/proxypackage/1.0.0/metadata.json")
+	metadata, err := ioutil.ReadFile(FonduData + "/proxypackage/1.0.0/metadata.json")
 
 	assertEqual(t, "register handler proxied", string(metadata), `{":action":["submit"],"name":["proxypackage"],"version":["1.0.0"]}`)
 }

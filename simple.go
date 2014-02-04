@@ -46,7 +46,7 @@ func getPage(url string) downloadResult {
 
 func updateProxyCache(pkg Package) error {
 	log.Println("Updating proxy cache for: " + pkg.Name)
-	url := Config.PypiMirror + "/simple/" + pkg.Name + "/"
+	url := PypiMirror + "/simple/" + pkg.Name + "/"
 
 	result := getPage(url)
 
@@ -73,7 +73,7 @@ func finalizeCache(pkg Package, data []byte) {
 		versionSplit := strings.Split(string(uri), "-")
 		almostVersion := versionSplit[len(versionSplit)-1]
 		version := strings.Replace(almostVersion, ".tar.gz", "", -1)
-		quoteduri := url.QueryEscape(Config.PypiMirror + "/a/b/" + string(uri))
+		quoteduri := url.QueryEscape(PypiMirror + "/a/b/" + string(uri))
 		replaceuri := "/fondu/cached-file/" + string(filename) + "?package=" + pkg.Name + "&release=" + version + "&original=" + quoteduri + "&name=" + url.QueryEscape(string(filename))
 		returnData = strings.Replace(returnData, string(uri), replaceuri, -1)
 	}
@@ -150,7 +150,7 @@ func simpleHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	name := paths[2]
-	pkg := Package{Name: name, DataDir: Config.DataDir}
+	pkg := Package{Name: name, DataDir: FonduData}
 
 	// The package is ours, so we serve it ourselves.
 	if pkg.Exists() && !pkg.Proxied() {

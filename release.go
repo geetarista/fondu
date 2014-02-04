@@ -1,13 +1,14 @@
 package main
 
 import (
-	simplejson "github.com/bitly/go-simplejson"
 	"io"
 	"io/ioutil"
 	"log"
 	"mime/multipart"
 	"os"
 	"path/filepath"
+
+	simplejson "github.com/bitly/go-simplejson"
 )
 
 type Release struct {
@@ -46,11 +47,15 @@ func (r Release) Path() string {
 func (r Release) DownloadUrl() (url string) {
 	mdata, err := r.Metadata()
 	if err != nil {
+		// panic(err.Error())
 		return
 	}
 
 	if json, ok := mdata.CheckGet("download_url"); ok {
-		url, _ = json.String()
+		url, err = json.String()
+		if err != nil {
+			panic(err.Error())
+		}
 		return
 	}
 

@@ -59,7 +59,7 @@ func cachedFileHandler(w http.ResponseWriter, r *http.Request) {
 	release := Release{
 		Name:     r.FormValue("package"),
 		Version:  r.FormValue("release"),
-		DataDir:  Config.DataDir,
+		DataDir:  FonduData,
 		Filename: name,
 	}
 

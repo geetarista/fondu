@@ -5,9 +5,44 @@ import (
 	"testing"
 )
 
+var testMetadata = `{
+  "comment": "Test comment",
+  "description": "Test description",
+  "metadata_version": "1.0",
+  "md5_digest": "bc06f913e06b680b6f021150a4e09044",
+  "filetype": "sdist",
+  "action": "file_upload",
+  "pyversion": "",
+  "keywords": [
+      "test",
+      "stuff",
+      "things"
+  ],
+  "author_email": "test@example.com",
+  "classifiers": [
+      "Development Status :: 1 - Beta",
+      "Intended Audience :: Developers",
+      "License :: OSI Approved :: MIT License",
+      "Operating System :: POSIX",
+      "Programming Language :: Python",
+      "Topic :: Software Development :: Libraries"
+  ],
+  "name": "test",
+  "protcol_version": "1",
+  "license": "MIT License",
+  "author": "Test Person",
+  "home_page": "https://github.com/test/test",
+  "download_url": "http://example.com",
+  "summary": "Just some test stuffs",
+  "platform": "UNKNOWN",
+  "version": "0.1.0"
+}
+`
+
 func TestSetupPackage(t *testing.T) {
 	dummyPackage.Delete()
-	validRelease.StoreMetadata([]byte(metadata))
+	err := validRelease.StoreMetadata([]byte(testMetadata))
+	failIfError(t, err)
 	validPackage.SetProxy(testBytes)
 	f, err := os.Open("./test/test.tar.gz")
 	failIfError(t, err)

@@ -33,6 +33,6 @@ release: all
 test: deps format
 	go test -cover
 	@rm -rf data
-	@if [ -f src.test ]; then rm src.test; fi
+	@if [ -f fondu.test ]; then rm fondu.test; fi
 
 .PHONY: all clean deps format release test updatedeps

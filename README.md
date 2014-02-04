@@ -22,20 +22,13 @@ To start Fondu, all you have to do use the `fondu` command.
 
 ## Configure
 
-You can pass Fondu the `-f` flag which tells it what config file to use.
+You can pass Fondu a few flags to override settings:
 
-```shell
-fondu -f /etc/fondu.conf
-```
+`d` Overrides the directory to store data. Default: `data`
 
-An example configuration file looks like this (defaults shown):
+`p` The port for Fondu to listen on. Default: 3638
 
-```ini
-[fondu]
-data_directory = data
-port = 3638
-pypi_mirror = http://pypi.python.org
-```
+`m` The pypi mirror to use. Default: http://pypi.python.org
 
 ## Uploading
 

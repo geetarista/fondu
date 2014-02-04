@@ -74,7 +74,7 @@ func TestInvalidExists(t *testing.T) {
 }
 
 func TestStoreMetadata(t *testing.T) {
-	data := []byte(metadata)
+	data := []byte(testMetadata)
 	got := validRelease.StoreMetadata(data)
 
 	assertEqual(t, "store metadata", got, nil)

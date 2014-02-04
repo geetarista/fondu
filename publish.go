@@ -22,7 +22,7 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 	name := r.FormValue("name")
 	version := r.FormValue("version")
 	log.Println("Registering: " + name + "-" + version)
-	pkg := Package{Name: name, DataDir: Config.DataDir}
+	pkg := Package{Name: name, DataDir: FonduData}
 
 	if pkg.Proxied() {
 		pkg.Delete()
@@ -49,12 +49,12 @@ func fileUploadHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	pkg := Package{Name: name, DataDir: Config.DataDir}
+	pkg := Package{Name: name, DataDir: FonduData}
 	if pkg.Proxied() {
 		pkg.Delete()
 	}
 
-	rel := Release{Name: name, Version: version, DataDir: Config.DataDir, Filename: name + "-" + version + ".tar.gz"}
+	rel := Release{Name: name, Version: version, DataDir: FonduData, Filename: name + "-" + version + ".tar.gz"}
 	r.ParseForm()
 	jsonData, _ := json.Marshal(r.Form)
 	rel.StoreMetadata(jsonData)
