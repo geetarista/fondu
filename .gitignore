@@ -2,6 +2,6 @@
 src
 .vagrant
 bin
-coverage.html
+coverage.*
 fondu
 data/

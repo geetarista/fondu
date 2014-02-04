@@ -32,7 +32,8 @@ release: all
 
 test: clean deps format
 	@echo "$(OK_COLOR)==> Testing Fondu...$(NO_COLOR)"
-	go test -cover
+	go test -coverprofile=coverage.out ./...
+	go tool cover -html=coverage.out -o coverage.html
 	@rm -rf data
 	@if [ -f fondu.test ]; then rm fondu.test; fi
 
