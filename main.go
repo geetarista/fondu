@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"github.com/robfig/config"
 	"log"
 	"mime"
@@ -33,7 +32,7 @@ func init() {
 	flag.Parse()
 
 	if *version {
-		fmt.Println(VERSION)
+		os.Stdout.WriteString(VERSION + "\n")
 		os.Exit(0)
 	}
 
