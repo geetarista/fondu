@@ -37,7 +37,7 @@ func failIfError(t *testing.T, err error) {
 
 func assertEqual(t *testing.T, name string, got, want interface{}) {
 	if !reflect.DeepEqual(want, got) {
-		t.Errorf("%s => %v, want %v", name, got, want)
+		t.Errorf("%s => %#v, want %#v", name, got, want)
 	}
 }
 

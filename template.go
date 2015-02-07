@@ -21,8 +21,8 @@ var templates = map[string]string{
 	"single": `{{ define "content" }}
 <ul>
 {{ range . }}
-{{ if .DownloadUrl }}
-  <li><a href="{{ .DownloadUrl }}" rel="download">{{ .Version }} download</a></li>
+{{ if .DownloadURL }}
+  <li><a href="{{ .DownloadURL }}" rel="download">{{ .Version }} download</a></li>
 {{ end }}
 {{ if .Path }}
   <li><a href="/file/{{ .Path }}#md5={{ .Md5 }}">{{ .Version }}</a></li>

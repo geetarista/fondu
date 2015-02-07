@@ -8,11 +8,15 @@ import (
 	"os"
 )
 
+// Fondu's version
 const VERSION = "0.1.0"
 
 var (
-	FonduData  string
-	FonduPort  string
+	// FonduData is the directory where fondu's data will be stored
+	FonduData string
+	// FonduPort is the port that fondu will listen on
+	FonduPort string
+	// PypiMirror is the mirror to pull new packages from
 	PypiMirror string
 )
 

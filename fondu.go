@@ -14,8 +14,8 @@ type pageResult struct {
 
 func redirectToFile(w http.ResponseWriter, r *http.Request, release Release) {
 	url := ""
-	if release.DownloadUrl() != "" {
-		url = release.DownloadUrl()
+	if release.DownloadURL() != "" {
+		url = release.DownloadURL()
 	} else {
 		url = "/file/" + release.Path()
 	}

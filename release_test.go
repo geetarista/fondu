@@ -40,15 +40,15 @@ func TestPath(t *testing.T) {
 	assertEqual(t, "path", got, want)
 }
 
-func TestValidDownloadUrl(t *testing.T) {
-	got := validRelease.DownloadUrl()
+func TestValidDownloadURL(t *testing.T) {
+	got := validRelease.DownloadURL()
 	want := "http://example.com"
 
 	assertEqual(t, "valid download url", got, want)
 }
 
-func TestInvalidDownloadUrl(t *testing.T) {
-	got := dummyRelease.DownloadUrl()
+func TestInvalidDownloadURL(t *testing.T) {
+	got := dummyRelease.DownloadURL()
 	want := ""
 
 	assertEqual(t, "invalid download url", got, want)

@@ -52,7 +52,7 @@ func TestSetupPackage(t *testing.T) {
 
 func TestEmptyReleases(t *testing.T) {
 	got := dummyPackage.Releases()
-	want := make([]Release, 0)
+	want := []Release{}
 	assertEqual(t, "empty releases", got, want)
 }
 

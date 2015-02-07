@@ -17,14 +17,14 @@ type downloadResult struct {
 }
 
 type releaseView struct {
-	DownloadUrl string
+	DownloadURL string
 	Version     string
 	Md5         string
 	Path        string
 }
 
-var rePackageUrl = regexp.MustCompile(`(?i)<a href=\"(?P<url>.+?)#md5=.+?\">(?P<filename>.+?)</a>`)
-var reDownloadUrl = regexp.MustCompile(`(?i)<a href=\"(?P<url>.+?)\"\s+rel=\"download">(?P<version>.+?) download_url</a>`)
+var rePackageURL = regexp.MustCompile(`(?i)<a href=\"(?P<url>.+?)#md5=.+?\">(?P<filename>.+?)</a>`)
+var reDownloadURL = regexp.MustCompile(`(?i)<a href=\"(?P<url>.+?)\"\s+rel=\"download">(?P<version>.+?) download_url</a>`)
 
 func simpleIndexHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("Rendering simple index")
@@ -64,7 +64,7 @@ func finalizeCache(pkg Package, data []byte) {
 	returnData := string(data)
 	// Replace the local package links with links to a local proxy
 	// so we can cache that result as well.
-	packageUris := rePackageUrl.FindAllSubmatch(data, -1)
+	packageUris := rePackageURL.FindAllSubmatch(data, -1)
 	for _, line := range packageUris {
 		uri := line[1]
 		filename := line[2]
@@ -80,14 +80,14 @@ func finalizeCache(pkg Package, data []byte) {
 
 	// Replace the download links with links to a local proxy so that
 	// we can cache the downloads as well.
-	downloadUrls := reDownloadUrl.FindAllSubmatch(data, -1)
+	downloadUrls := reDownloadURL.FindAllSubmatch(data, -1)
 	for _, line := range downloadUrls {
 		uri := line[1]
 		version := line[2]
 		filename := pkg.Name + "-" + string(version) + ".tar.gz"
-		quotedUri := url.QueryEscape(string(uri))
-		replaceUri := "/fondu/cached-file/" + filename + "?package=" + pkg.Name + "&release=" + string(version) + "&original=" + quotedUri + "&name=" + url.QueryEscape(filename)
-		returnData = strings.Replace(returnData, string(uri), replaceUri, -1)
+		quotedURI := url.QueryEscape(string(uri))
+		replaceURI := "/fondu/cached-file/" + filename + "?package=" + pkg.Name + "&release=" + string(version) + "&original=" + quotedURI + "&name=" + url.QueryEscape(filename)
+		returnData = strings.Replace(returnData, string(uri), replaceURI, -1)
 	}
 
 	pkg.SetProxy([]byte(returnData))
@@ -106,7 +106,7 @@ func buildReleaseMap(pkg Package) []releaseView {
 	releaseMap := []releaseView{}
 	for _, rel := range pkg.Releases() {
 		releaseMap = append(releaseMap, releaseView{
-			DownloadUrl: rel.DownloadUrl(),
+			DownloadURL: rel.DownloadURL(),
 			Version:     rel.Version,
 			Md5:         rel.Md5(),
 			Path:        rel.Path(),
