@@ -14,7 +14,7 @@ Fondu is a [CheeseShop](http://wiki.python.org/moin/CheeseShop) server powered b
 
 Just [download the binary for your platform](https://github.com/geetarista/fondu/releases).
 
-Please not that so far the only platforms I've tested on are darwin-amd64 and linux-amd64. If you have any platform-specific problems, please file an issue so I can investigate.
+Please note that so far the only platforms I've tested on are darwin-amd64 and linux-amd64. If you have any platform-specific problems, please file an issue so I can investigate.
 
 ## Usage
 
